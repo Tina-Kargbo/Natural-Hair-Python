@@ -3,7 +3,8 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
-  
+from pprint import pprint
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -58,8 +59,25 @@ def update_sales_worksheet(data):
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
 
+def calculate_suplus_data(sales_row):
+    """
+    Compare sales data and calculate for each data type
+    """
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
-print("Sales worksheet updated successfully.\n")
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
+    print(stock_row)
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_suplus_data(sales_data)
+
+
+print("Welcome to Natural Hair Products Data Automation")
+main()
