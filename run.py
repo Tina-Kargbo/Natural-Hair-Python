@@ -1,8 +1,9 @@
+
 #This code was inspired by the Code Institute's love_sandwiches challenge.
 
 import gspread
 from google.oauth2.service_account import Credentials
-
+  
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -51,4 +52,14 @@ def validate_data(values):
 
     return True 
 
+def update_sales_worksheet(data):
+
+    print("updating sales worksheet...\n") 
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+
+
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
+print("Sales worksheet updated successfully.\n")
